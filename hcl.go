@@ -102,6 +102,7 @@ type HclNode interface {
 	AddNode(element HclNode)
 	File() HclFile
 	Nodes() []HclNode
+	Operator() string
 	SetFileName(value string)
 	Type() HclType
 }
