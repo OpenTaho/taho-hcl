@@ -25,7 +25,7 @@ var hclElementName = map[HclType]string{
 	HclTypeToken:      "token",
 	HclTypeSpace:      "space",
 	HclTypeString:     "string",
-	HclTypeSimplePair: "simplePair",
+	HclTypeSimplePair: "simple-pair",
 }
 
 type HclNameAccessor interface {
