@@ -8,6 +8,7 @@ const (
 	HclTypeDir
 	HclTypeFile
 	HclTypeHereDoc
+	HclTypeHereDocWithIndent
 	HclTypeOther
 	HclTypeSimplePair
 	HclTypeSpace
@@ -16,16 +17,17 @@ const (
 )
 
 var hclElementName = map[HclType]string{
-	HclTypeBlock:      "block",
-	HclTypeComment:    "comment",
-	HclTypeDir:        "dir",
-	HclTypeFile:       "file",
-	HclTypeHereDoc:    "heredoc",
-	HclTypeOther:      "other",
-	HclTypeToken:      "token",
-	HclTypeSpace:      "space",
-	HclTypeString:     "string",
-	HclTypeSimplePair: "simple-pair",
+	HclTypeBlock:             "block",
+	HclTypeComment:           "comment",
+	HclTypeDir:               "dir",
+	HclTypeFile:              "file",
+	HclTypeHereDoc:           "doc",
+	HclTypeHereDocWithIndent: "doc-with-indent",
+	HclTypeOther:             "other",
+	HclTypeToken:             "token",
+	HclTypeSpace:             "space",
+	HclTypeString:            "string",
+	HclTypeSimplePair:        "simple-pair",
 }
 
 type HclNameAccessor interface {
