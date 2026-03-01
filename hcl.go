@@ -1,23 +1,31 @@
 package hcl
 
-type HclElementType int
+type HclType int
 
 const (
-	HclElementTypeBlock = iota
-	HclElementTypeByte
-	HclElementTypeComment
-	HclElementTypeWhitespace
+	HclTypeBlock = iota
+	HclTypeComment
+	HclTypeDir
+	HclTypeFile
+	HclTypeHereDoc
+	HclTypeOther
+	HclTypeSimplePair
+	HclTypeSpace
+	HclTypeString
+	HclTypeToken
 )
 
-var hclElementName = map[HclElementType]string{
-	HclElementTypeByte:       "byte",
-	HclElementTypeWhitespace: "whitespace",
-	HclElementTypeComment:    "comment",
-	HclElementTypeBlock:      "block",
-}
-
-type HclCommentAccessor interface {
-	Comment() bool
+var hclElementName = map[HclType]string{
+	HclTypeBlock:      "block",
+	HclTypeComment:    "comment",
+	HclTypeDir:        "dir",
+	HclTypeFile:       "file",
+	HclTypeHereDoc:    "heredoc",
+	HclTypeOther:      "other",
+	HclTypeToken:      "token",
+	HclTypeSpace:      "space",
+	HclTypeString:     "string",
+	HclTypeSimplePair: "simplePair",
 }
 
 type HclNameAccessor interface {
@@ -26,10 +34,6 @@ type HclNameAccessor interface {
 
 type HclValueAccessor interface {
 	Value() string
-}
-
-type HclCommentMutator interface {
-	SetComment(value bool)
 }
 
 type HclNameMutator interface {
@@ -41,34 +45,30 @@ type HclValueMutator interface {
 }
 
 type HclBodyAccessor interface {
-	Body() []HclElement
+	Body() []HclNode
 }
 
 type HclBodyMutator interface {
-	SetBody(value []HclElement)
+	SetBody(value []HclNode)
 }
 
 type HclPairAccessor interface {
-	Pair() HclElement
+	Pair() HclNode
 }
 
 type HclPairMutator interface {
-	SetPair(value HclElement)
+	SetPair(value HclNode)
 }
 
 type HclDir interface {
 	HclName
+	HclNodeProvider
 	Files() ([]HclFile, error)
 }
 
 type HclBody interface {
 	HclBodyAccessor
 	HclBodyMutator
-}
-
-type HclComment interface {
-	HclCommentAccessor
-	HclCommentMutator
 }
 
 type HclValue interface {
@@ -92,27 +92,25 @@ type HclPair interface {
 // In the context of HCL the basic elements are blocks and attributes.
 //
 // Whitespace and comments are also elements.
-type HclElement interface {
+type HclNode interface {
 	HclBody
-	HclComment
-	HclName
 	HclPair
 	HclValue
 
-	AddNestedHclElement(element HclElement)
+	AddNode(element HclNode)
 	File() HclFile
-	HclElementType() HclElementType
-	NestedElements() []HclElement
+	Nodes() []HclNode
 	SetFileName(value string)
+	Type() HclType
 }
 
-type HclElementProvider interface {
-	Elements() []HclElement
+type HclNodeProvider interface {
+	Nodes() []HclNode
 }
 
 type HclFile interface {
 	HclName
-	HclElementProvider
+	HclNodeProvider
 }
 
 type HclParser interface {
@@ -120,6 +118,6 @@ type HclParser interface {
 	NewDir(name string) HclDir
 }
 
-func (id HclElementType) String() string {
+func (id HclType) String() string {
 	return hclElementName[id]
 }
