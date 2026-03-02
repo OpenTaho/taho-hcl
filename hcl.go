@@ -9,8 +9,9 @@ const (
 	HclTypeFile
 	HclTypeHereDoc
 	HclTypeHereDocWithIndent
+	HclTypeMultiLinePair
 	HclTypeOther
-	HclTypeSimplePair
+	HclTypeSingleLinePair
 	HclTypeSpace
 	HclTypeString
 	HclTypeToken
@@ -23,11 +24,12 @@ var hclElementName = map[HclType]string{
 	HclTypeFile:              "file",
 	HclTypeHereDoc:           "doc",
 	HclTypeHereDocWithIndent: "doc-with-indent",
+	HclTypeMultiLinePair:     "multi-line-pair",
 	HclTypeOther:             "other",
-	HclTypeToken:             "token",
+	HclTypeSingleLinePair:    "single-line-pair",
 	HclTypeSpace:             "space",
 	HclTypeString:            "string",
-	HclTypeSimplePair:        "simple-pair",
+	HclTypeToken:             "token",
 }
 
 type HclNameAccessor interface {
