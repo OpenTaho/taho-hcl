@@ -11,7 +11,7 @@ const (
 	HclTypeHereDocWithIndent
 	HclTypeMultiLinePair
 	HclTypeOther
-	HclTypeSingleLinePair
+	HclTypePair
 	HclTypeSpace
 	HclTypeString
 	HclTypeToken
@@ -26,7 +26,7 @@ var hclElementName = map[HclType]string{
 	HclTypeHereDocWithIndent: "doc-with-indent",
 	HclTypeMultiLinePair:     "multi-line-pair",
 	HclTypeOther:             "other",
-	HclTypeSingleLinePair:    "single-line-pair",
+	HclTypePair:              "pair",
 	HclTypeSpace:             "space",
 	HclTypeString:            "string",
 	HclTypeToken:             "token",
@@ -106,6 +106,8 @@ type HclNode interface {
 	Nodes() []HclNode
 	Operator() string
 	SetFileName(value string)
+	SetType(value HclType)
+	SetNodes(node []HclNode)
 	Type() HclType
 }
 
