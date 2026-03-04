@@ -56,6 +56,14 @@ type HclBodyMutator interface {
 	SetBody(value []HclNode)
 }
 
+type HclCommentAccessor interface {
+	Comment() string
+}
+
+type HclCommentMutator interface {
+	SetComment(value string)
+}
+
 type HclPairAccessor interface {
 	Pair() HclNode
 }
@@ -66,13 +74,18 @@ type HclPairMutator interface {
 
 type HclDir interface {
 	HclName
-	HclNodeProvider
+	HclBodyAccessor
 	Files() ([]HclFile, error)
 }
 
 type HclBody interface {
 	HclBodyAccessor
 	HclBodyMutator
+}
+
+type HclComment interface {
+	HclCommentAccessor
+	HclCommentMutator
 }
 
 type HclValue interface {
@@ -100,10 +113,10 @@ type HclNode interface {
 	HclBody
 	HclPair
 	HclValue
+	HclCommentMutator
 
 	AddNode(element HclNode)
 	File() HclFile
-	Nodes() []HclNode
 	Operator() string
 	SetFileName(value string)
 	SetType(value HclType)
@@ -111,13 +124,9 @@ type HclNode interface {
 	Type() HclType
 }
 
-type HclNodeProvider interface {
-	Nodes() []HclNode
-}
-
 type HclFile interface {
 	HclName
-	HclNodeProvider
+	HclBodyAccessor
 }
 
 type HclParser interface {
