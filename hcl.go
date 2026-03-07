@@ -6,13 +6,13 @@ const (
 	HclTypeBlock = iota
 	HclTypeComment
 	HclTypeDir
-	HclTypeFile
 	HclTypeHereDoc
 	HclTypeHereDocWithIndent
 	HclTypeMultiLinePair
 	HclTypeOther
 	HclTypePair
 	HclTypeSpace
+	HclTypeSpan
 	HclTypeString
 	HclTypeToken
 )
@@ -21,13 +21,13 @@ var hclElementName = map[HclType]string{
 	HclTypeBlock:             "block",
 	HclTypeComment:           "comment",
 	HclTypeDir:               "dir",
-	HclTypeFile:              "file",
 	HclTypeHereDoc:           "doc",
 	HclTypeHereDocWithIndent: "doc-with-indent",
 	HclTypeMultiLinePair:     "multi-line-pair",
 	HclTypeOther:             "other",
 	HclTypePair:              "pair",
 	HclTypeSpace:             "space",
+	HclTypeSpan:              "span",
 	HclTypeString:            "string",
 	HclTypeToken:             "token",
 }
@@ -120,7 +120,6 @@ type HclNode interface {
 	Operator() string
 	SetFileName(value string)
 	SetType(value HclType)
-	SetNodes(node []HclNode)
 	Type() HclType
 }
 
