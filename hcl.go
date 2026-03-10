@@ -127,6 +127,7 @@ type HclNode interface {
 type HclFile interface {
 	HclName
 	HclBodyAccessor
+	Format() HclFile
 }
 
 type HclParser interface {
