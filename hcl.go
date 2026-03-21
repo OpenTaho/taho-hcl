@@ -10,6 +10,7 @@ const (
 	HclTypeDocWithIndent
 	HclTypeOther
 	HclTypePair
+	HclTypePairGroup
 	HclTypeSpace
 	HclTypeSpan
 	HclTypeString
@@ -24,6 +25,7 @@ var hclElementName = map[HclType]string{
 	HclTypeDocWithIndent: "doc-with-indent",
 	HclTypeOther:         "other",
 	HclTypePair:          "pair",
+	HclTypePairGroup:     "pair-group",
 	HclTypeSpace:         "space",
 	HclTypeSpan:          "span",
 	HclTypeString:        "string",
@@ -71,7 +73,7 @@ type HclPairMutator interface {
 }
 
 type HclDir interface {
-	HclName
+	HclNameAccessor
 	HclBodyAccessor
 	Files() ([]HclFile, error)
 }
@@ -115,9 +117,10 @@ type HclNode interface {
 
 	AddNode(element HclNode)
 	File() HclFile
+	IsSimplePair() bool
 	Operator() string
-	SetDocTag(value string)
 	SetDocIndentation(value int)
+	SetDocTag(value string)
 	SetFileName(value string)
 	SetType(value HclType)
 	String() string
@@ -125,9 +128,11 @@ type HclNode interface {
 }
 
 type HclFile interface {
-	HclName
+	HclNameAccessor
 	HclBodyAccessor
 	Format() HclFile
+	String() string
+	SaveAs(fileName string)
 }
 
 type HclParser interface {
